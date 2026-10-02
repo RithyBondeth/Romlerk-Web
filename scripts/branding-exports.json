@@ -1,0 +1,29 @@
+{
+  "source": "../public/branding/romlerk-doodle-logo-v2.png",
+  "jobs": [
+    {
+      "path": "../public/branding/romlerk-logo.png",
+      "size": 512,
+      "opaque": false,
+      "fraction": 0.92
+    },
+    {
+      "path": "../public/branding/romlerk-app-icon.png",
+      "size": 1024,
+      "opaque": true,
+      "fraction": 0.8
+    },
+    {
+      "path": "../public/favicon.png",
+      "size": 64,
+      "opaque": true,
+      "fraction": 0.88
+    },
+    {
+      "path": "../public/apple-touch-icon.png",
+      "size": 180,
+      "opaque": true,
+      "fraction": 0.8
+    }
+  ]
+}
