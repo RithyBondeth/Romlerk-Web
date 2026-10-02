@@ -26,7 +26,17 @@ export default defineNuxtConfig({
         { name: "twitter:card", content: "summary" },
       ],
       link: [
-        { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+        {
+          rel: "icon",
+          type: "image/png",
+          sizes: "64x64",
+          href: "/favicon.png",
+        },
+        {
+          rel: "apple-touch-icon",
+          sizes: "180x180",
+          href: "/apple-touch-icon.png",
+        },
         {
           rel: "preload",
           href: "/fonts/Merriweather-Regular.woff2",

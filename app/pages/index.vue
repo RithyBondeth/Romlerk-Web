@@ -217,7 +217,9 @@ const questions = [
   </section>
 
   <section class="closing-section container">
-    <span class="closing-symbol"><Check :size="31" :stroke-width="1.7" /></span>
+    <span class="closing-symbol closing-logo"
+      ><img src="/branding/romlerk-logo.png" alt="" width="96" height="96"
+    /></span>
     <h2>Carry your day.<br />Not everything in your head.</h2>
     <p>A thought. A task. A little peace of mind.</p>
     <button class="button" @click="openDownloads">

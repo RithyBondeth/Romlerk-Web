@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowUpRight, Check, Menu, Moon, Sun, X } from "@lucide/vue";
+import { ArrowUpRight, Menu, Moon, Sun, X } from "@lucide/vue";
 const menuOpen = ref(false);
 const { animate, enter, leave, cancel, reduced } = useMotion();
 const isDark = ref(false);
@@ -71,7 +71,12 @@ provide("openDownloads", openDownloads);
   <header class="site-header">
     <div class="container header-inner">
       <NuxtLink to="/" class="brand" aria-label="Romlerk home"
-        ><span class="brand-mark"><Check :size="21" :stroke-width="2.4" /></span
+        ><span class="brand-mark"
+          ><img
+            src="/branding/romlerk-logo.png"
+            alt=""
+            width="48"
+            height="48" /></span
         >Romlerk<span class="brand-khmer" lang="km">រំលឹក</span></NuxtLink
       >
       <nav class="desktop-nav" aria-label="Main navigation">
@@ -132,7 +137,13 @@ provide("openDownloads", openDownloads);
   <footer class="site-footer container">
     <div>
       <NuxtLink class="brand footer-brand" to="/"
-        ><span class="brand-mark"><Check :size="18" /></span>Romlerk</NuxtLink
+        ><span class="brand-mark"
+          ><img
+            src="/branding/romlerk-logo.png"
+            alt=""
+            width="48"
+            height="48" /></span
+        >Romlerk</NuxtLink
       >
       <p>A little space for what matters.</p>
     </div>
@@ -153,7 +164,12 @@ provide("openDownloads", openDownloads);
     @click="$event.target === downloadDialog && closeDownloads()"
   >
     <div class="dialog-top">
-      <span class="brand-mark"><Check :size="24" /></span
+      <span class="brand-mark"
+        ><img
+          src="/branding/romlerk-logo.png"
+          alt=""
+          width="64"
+          height="64" /></span
       ><button
         class="icon-button"
         aria-label="Close downloads"
