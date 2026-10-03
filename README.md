@@ -19,11 +19,17 @@ npm run build
 npm run generate
 ```
 
-Static hosting output is `.output/public`. The routes `/`, `/privacy`, and `/help` are prerendered. Use `npm run build` for a Node server instead.
+Static hosting output is `.output/public`. English routes `/`, `/privacy`, and `/help`, and Khmer routes `/km`, `/km/privacy`, and `/km/help` are prerendered. Use `npm run build` for a Node server instead.
 
 ## Launch destinations
 
 Copy `.env.example` to `.env` and provide real app-store links, a beta URL, and a support email when available. These optional public settings are embedded at generation time for static deployments; regenerate after changing them. Without destinations, the download dialog shows Coming soon and offers the working demo. No email addresses are collected.
+
+## Languages
+
+The header switches between English and Khmer while preserving the current page, query, and section. Internal links stay in the selected language. The URL determines the language during server rendering, including page titles, descriptions, and accessible labels. A browser preference remembers the selection when returning to the English home entry point; explicit Khmer links always keep Khmer. Storage is optional.
+
+Copy is translated through `app/composables/useLocale.ts`, with English source messages and a Khmer catalog in `app/locales/km.json`. The demo can independently show either example language, and follows the site language when it changes. Noto Serif Khmer is self-hosted from [Google Fonts](https://github.com/google/fonts/tree/main/ofl/notoserifkhmer); its license is in `public/fonts/NotoSerifKhmer-OFL.txt`.
 
 ## Interactive examples
 

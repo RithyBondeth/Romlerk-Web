@@ -11,6 +11,7 @@ import {
   CalendarDays,
   FileText,
 } from "@lucide/vue";
+const { t } = useLocale();
 const { animate, reduced } = useMotion();
 const progressRing = ref<HTMLElement>();
 const tasks = ref([
@@ -47,7 +48,7 @@ watch(completed, (count) => {
   <div class="preview-wrap">
     <div
       class="phone-preview"
-      aria-label="Interactive Today preview with example tasks"
+      :aria-label="t('Interactive Today preview with example tasks')"
     >
       <div class="phone-status" aria-hidden="true">
         <span>9:41</span>
@@ -56,17 +57,17 @@ watch(completed, (count) => {
       </div>
       <div class="phone-content">
         <div class="phone-date">
-          <span>FRIDAY, OCTOBER 2</span
+          <span>{{ t("FRIDAY, OCTOBER 2") }}</span
           ><Settings :size="17" aria-hidden="true" />
         </div>
         <div class="phone-heading">
           <div>
-            <h2>Today</h2>
+            <h2>{{ t("Today") }}</h2>
             <p>
               {{
                 remaining
-                  ? `${remaining} little things ahead`
-                  : "A little room to breathe"
+                  ? t("{count} little things ahead", { count: remaining })
+                  : t("A little room to breathe")
               }}
             </p>
           </div>
@@ -77,8 +78,8 @@ watch(completed, (count) => {
           </div>
         </div>
         <div class="phone-section-label">
-          <Sun :size="15" /><span>YOUR DAY</span
-          ><span>{{ remaining }} remaining</span>
+          <Sun :size="15" /><span>{{ t("YOUR DAY") }}</span
+          ><span>{{ t("{count} remaining", { count: remaining }) }}</span>
         </div>
         <div class="phone-task-group">
           <div
@@ -90,18 +91,18 @@ watch(completed, (count) => {
             <button
               class="task-check"
               :class="{ checked: task.done }"
-              :aria-label="`${task.done ? 'Reopen' : 'Complete'} ${task.title}`"
+              :aria-label="t(task.done ? 'Reopen {task}' : 'Complete {task}', { task: t(task.title) })"
               :aria-pressed="task.done"
               @click="task.done = !task.done"
             >
               <Check v-if="task.done" :size="13" />
             </button>
             <div>
-              <span class="task-title">{{ task.title }}</span
+              <span class="task-title">{{ t(task.title) }}</span
               ><span class="task-meta"
-                >{{ task.time
+                >{{ t(task.time)
                 }}<span v-if="task.tag" class="task-tag">{{
-                  task.tag
+                  t(task.tag)
                 }}</span></span
               >
             </div>
@@ -115,25 +116,25 @@ watch(completed, (count) => {
             width="170"
             height="128"
             class="app-illustration"
-          /><span>A plan for your day.<br />Room for yourself.</span>
+          /><span>{{ t("A plan for your day.") }}<br />{{ t("Room for yourself.") }}</span>
         </div>
       </div>
       <div class="phone-controls">
         <a class="phone-capture" href="#how-it-works"
-          ><span><Plus :size="17" /></span>What needs doing?</a
+          ><span><Plus :size="17" /></span>{{ t("What needs doing?") }}</a
         >
         <div class="phone-tabs" aria-hidden="true">
-          <span class="selected"><Sun :size="17" />Today</span
-          ><span><CalendarDays :size="17" />Upcoming</span
-          ><span><Inbox :size="17" />Inbox</span
-          ><span><FileText :size="17" />Notes</span
-          ><span><Search :size="17" />Search</span>
+          <span class="selected"><Sun :size="17" />{{ t("Today") }}</span
+          ><span><CalendarDays :size="17" />{{ t("Upcoming") }}</span
+          ><span><Inbox :size="17" />{{ t("Inbox") }}</span
+          ><span><FileText :size="17" />{{ t("Notes") }}</span
+          ><span><Search :size="17" />{{ t("Search") }}</span>
         </div>
         <div class="home-indicator" />
       </div>
     </div>
     <div class="preview-caption">
-      <Coffee :size="15" /><span>Try checking something off.</span>
+      <Coffee :size="15" /><span>{{ t("Try checking something off.") }}</span>
     </div>
   </div>
 </template>

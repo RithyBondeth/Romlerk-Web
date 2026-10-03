@@ -14,11 +14,13 @@ import {
   Smartphone,
   WifiOff,
 } from "@lucide/vue";
+const { t, localePath } = useLocale();
 const openDownloads = inject<() => void>("openDownloads")!;
 useSeoMeta({
-  ogTitle: "Romlerk | Your day, a little lighter",
-  ogDescription:
-    "Everyday thoughts, turned into tasks. Private, offline, and ready for English and Khmer.",
+  title: () => t("Romlerk | Your day, a little lighter"),
+  description: () => t("Everyday thoughts, turned into tasks. Private, offline, and ready for English and Khmer."),
+  ogTitle: () => t("Romlerk | Your day, a little lighter"),
+  ogDescription: () => t("Everyday thoughts, turned into tasks. Private, offline, and ready for English and Khmer."),
 });
 const questions = [
   {
@@ -53,63 +55,61 @@ const questions = [
   <section class="hero container">
     <div class="hero-copy">
       <p class="eyebrow">
-        <span class="eyebrow-rule" />A LITTLE SPACE FOR WHAT MATTERS
+        <span class="eyebrow-rule" />{{ t("A LITTLE SPACE FOR WHAT MATTERS") }}
       </p>
-      <h1>Your day,<br />a little <span>lighter.</span></h1>
+      <h1>{{ t("Your day,") }}<br />{{ t("a little") }} <span>{{ t("lighter.") }}</span></h1>
       <p class="hero-description">
-        Everyday thoughts, turned into tasks and reminders. A private little
-        space on your phone, in English or Khmer.
+        {{ t("Everyday thoughts, turned into tasks and reminders. A private little space on your phone, in English or Khmer.") }}
       </p>
       <div class="hero-actions">
         <button class="button" @click="openDownloads">
-          Get Romlerk<ArrowUpRight :size="18" /></button
+          {{ t("Get Romlerk") }}<ArrowUpRight :size="18" /></button
         ><a class="button button-quiet" href="#how-it-works"
-          >See how it works<ArrowRight :size="17"
+          >{{ t("See how it works") }}<ArrowRight :size="17"
         /></a>
       </div>
       <p class="hero-platforms">
-        <Smartphone :size="15" />Coming soon for iOS & Android
+        <Smartphone :size="15" />{{ t("Coming soon for iOS & Android") }}
       </p>
     </div>
     <TodayPreview />
   </section>
 
   <div class="promise-strip container">
-    <span><WifiOff :size="19" />A whole day, offline.</span
-    ><span><LockKeyhole :size="19" />Private by design.</span
+    <span><WifiOff :size="19" />{{ t("A whole day, offline.") }}</span
+    ><span><LockKeyhole :size="19" />{{ t("Private by design.") }}</span
     ><span
-      ><MessageCircle :size="19" />English & <span lang="km">ខ្មែរ</span>.</span
+      ><MessageCircle :size="19" />{{ t("English &") }} <span lang="km">ខ្មែរ</span>.</span
     >
   </div>
 
   <section id="how-it-works" class="section container capture-section">
     <div class="section-copy">
-      <p class="eyebrow">FROM THOUGHT TO TASK</p>
-      <h2>Write it down.<br />Let your mind move on.</h2>
+      <p class="eyebrow">{{ t("FROM THOUGHT TO TASK") }}</p>
+      <h2>{{ t("Write it down.") }}<br />{{ t("Let your mind move on.") }}</h2>
       <p>
-        “Call Mom tomorrow at 9.” That’s enough. Romlerk picks out the details,
-        and you decide what to save.
+        {{ t("“Call Mom tomorrow at 9.” That’s enough. Romlerk picks out the details, and you decide what to save.") }}
       </p>
       <div class="capture-steps">
         <div>
           <span class="step-icon"><MessageCircle :size="18" /></span>
           <div>
-            <h3>Say it naturally</h3>
-            <p>Type a thought, or speak on supported devices.</p>
+            <h3>{{ t("Say it naturally") }}</h3>
+            <p>{{ t("Type a thought, or speak on supported devices.") }}</p>
           </div>
         </div>
         <div>
           <span class="step-icon"><CalendarDays /></span>
           <div>
-            <h3>Make it yours</h3>
-            <p>Review the date, time, and details before saving.</p>
+            <h3>{{ t("Make it yours") }}</h3>
+            <p>{{ t("Review the date, time, and details before saving.") }}</p>
           </div>
         </div>
         <div>
           <span class="step-icon"><Check :size="19" /></span>
           <div>
-            <h3>Get on with your day</h3>
-            <p>A local reminder brings it back when you need it.</p>
+            <h3>{{ t("Get on with your day") }}</h3>
+            <p>{{ t("A local reminder brings it back when you need it.") }}</p>
           </div>
         </div>
       </div>
@@ -119,23 +119,22 @@ const questions = [
 
   <section id="made-for-you" class="section container everyday-section">
     <div class="section-heading">
-      <h2>Less juggling.<br />More living.</h2>
-      <p>A simple place for your plans, with room for the rest of your life.</p>
+      <h2>{{ t("Less juggling.") }}<br />{{ t("More living.") }}</h2>
+      <p>{{ t("A simple place for your plans, with room for the rest of your life.") }}</p>
     </div>
     <div class="everyday-grid">
       <article class="feature-today">
         <div>
           <span class="feature-icon"><Check :size="22" /></span>
-          <h3>A clear view of today.</h3>
+          <h3>{{ t("A clear view of today.") }}</h3>
           <p>
-            See what’s ahead, what needs a little attention, and what you’ve
-            already done.
+            {{ t("See what’s ahead, what needs a little attention, and what you’ve already done.") }}
           </p>
         </div>
         <img
           class="app-illustration"
           src="/illustrations/chilling.svg"
-          alt="A person relaxing with their feet up"
+          :alt="t('A person relaxing with their feet up')"
           width="360"
           height="270"
           loading="lazy"
@@ -143,28 +142,26 @@ const questions = [
       </article>
       <article class="feature-language">
         <Globe2 :size="26" />
-        <h3>Your words.<br />Your language.</h3>
+        <h3>{{ t("Your words.") }}<br />{{ t("Your language.") }}</h3>
         <p>
-          Capture in English or Khmer. Keep the thought in the language it came
-          in.
+          {{ t("Capture in English or Khmer. Keep the thought in the language it came in.") }}
         </p>
         <div class="language-examples">
-          <span>Read a little tonight</span
+          <span lang="en">Read a little tonight</span
           ><span lang="km">អានសៀវភៅយប់នេះ</span>
         </div>
       </article>
       <article class="feature-details">
         <div>
-          <h3>A routine. A note.<br />A nudge at the right time.</h3>
+          <h3>{{ t("A routine. A note.") }}<br />{{ t("A nudge at the right time.") }}</h3>
           <p>
-            Add recurring tasks, tags, priorities, and notes. Keep the small
-            things together.
+            {{ t("Add recurring tasks, tags, priorities, and notes. Keep the small things together.") }}
           </p>
         </div>
         <div class="detail-tags">
-          <span><RotateCcw />Every Sunday</span
-          ><span><FileText />A note to self</span
-          ><span><Bell />Tomorrow, 9 AM</span>
+          <span><RotateCcw />{{ t("Every Sunday") }}</span
+          ><span><FileText />{{ t("A note to self") }}</span
+          ><span><Bell />{{ t("Tomorrow, 9 AM") }}</span>
         </div>
       </article>
     </div>
@@ -175,43 +172,42 @@ const questions = [
       <img
         class="app-illustration"
         src="/illustrations/reading.svg"
-        alt="A person sitting quietly with a book"
+        :alt="t('A person sitting quietly with a book')"
         width="400"
         height="300"
         loading="lazy"
-      /><span><ShieldCheck :size="18" />A personal space, on your phone.</span>
+      /><span><ShieldCheck :size="18" />{{ t("A personal space, on your phone.") }}</span>
     </div>
     <div class="section-copy">
-      <p class="eyebrow">YOUR LIFE IS YOUR BUSINESS</p>
-      <h2>On your phone.<br />On your terms.</h2>
+      <p class="eyebrow">{{ t("YOUR LIFE IS YOUR BUSINESS") }}</p>
+      <h2>{{ t("On your phone.") }}<br />{{ t("On your terms.") }}</h2>
       <p>
-        Your thoughts don’t need a cloud account. Romlerk processes capture on
-        your device and keeps your tasks in a local database.
+        {{ t("Your thoughts don’t need a cloud account. Romlerk processes capture on your device and keeps your tasks in a local database.") }}
       </p>
       <ul class="privacy-points">
-        <li><Check :size="17" />No account or cloud AI required</li>
-        <li><Check :size="17" />Works with or without an on-device model</li>
-        <li><Check :size="17" />You choose phone backup and export</li>
+        <li><Check :size="17" />{{ t("No account or cloud AI required") }}</li>
+        <li><Check :size="17" />{{ t("Works with or without an on-device model") }}</li>
+        <li><Check :size="17" />{{ t("You choose phone backup and export") }}</li>
       </ul>
-      <NuxtLink class="inline-link" to="/privacy"
-        >Read about your privacy<ArrowUpRight :size="16"
+      <NuxtLink class="inline-link" :to="localePath('/privacy')"
+        >{{ t("Read about your privacy") }}<ArrowUpRight :size="16"
       /></NuxtLink>
     </div>
   </section>
 
   <section id="questions" class="section container faq-section">
     <div class="section-heading">
-      <h2>Good questions.<br />Simple answers.</h2>
-      <NuxtLink class="inline-link" to="/help"
-        >More about Romlerk<ArrowUpRight :size="16"
+      <h2>{{ t("Good questions.") }}<br />{{ t("Simple answers.") }}</h2>
+      <NuxtLink class="inline-link" :to="localePath('/help')"
+        >{{ t("More about Romlerk") }}<ArrowUpRight :size="16"
       /></NuxtLink>
     </div>
     <div class="faq-list">
       <SmoothFaq
         v-for="question in questions"
         :key="question.title"
-        :title="question.title"
-        :answer="question.answer"
+        :title="t(question.title)"
+        :answer="t(question.answer)"
       />
     </div>
   </section>
@@ -220,10 +216,10 @@ const questions = [
     <span class="closing-symbol closing-logo"
       ><img src="/branding/romlerk-logo.png" alt="" width="96" height="96"
     /></span>
-    <h2>Carry your day.<br />Not everything in your head.</h2>
-    <p>A thought. A task. A little peace of mind.</p>
+    <h2>{{ t("Carry your day.") }}<br />{{ t("Not everything in your head.") }}</h2>
+    <p>{{ t("A thought. A task. A little peace of mind.") }}</p>
     <button class="button" @click="openDownloads">
-      Get Romlerk<ArrowUpRight :size="18" /></button
-    ><span class="closing-note">Coming soon for iOS & Android</span>
+      {{ t("Get Romlerk") }}<ArrowUpRight :size="18" /></button
+    ><span class="closing-note">{{ t("Coming soon for iOS & Android") }}</span>
   </section>
 </template>
