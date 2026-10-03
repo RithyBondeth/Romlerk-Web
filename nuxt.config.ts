@@ -10,6 +10,21 @@ export default defineNuxtConfig({
       supportEmail: "",
     },
   },
+  hooks: {
+    "pages:extend"(pages) {
+      // Separate records make switching language work even on the same page.
+      for (const page of [...pages]) {
+        if (["/", "/privacy", "/help"].includes(page.path)) {
+          pages.push({
+            ...page,
+            name: `${page.name}-km`,
+            path: page.path === "/" ? "/km" : `/km${page.path}`,
+          });
+        }
+      }
+    },
+  },
+  nitro: { prerender: { routes: ["/", "/privacy", "/help", "/km", "/km/privacy", "/km/help"] } },
   app: {
     head: {
       htmlAttrs: { lang: "en" },

@@ -7,8 +7,9 @@ import {
   RotateCcw,
   Sparkles,
 } from "@lucide/vue";
+const { t, locale } = useLocale();
 const { enter, leave, cancel } = useMotion();
-const language = ref<"en" | "km">("en");
+const language = ref<"en" | "km">(locale.value);
 const selected = ref(0);
 const reviewed = ref(false);
 const saved = ref(false);
@@ -66,18 +67,19 @@ function reset() {
   saved.value = false;
 }
 watch([language, selected], reset);
+watch(locale, (value) => { language.value = value; });
 </script>
 
 <template>
   <div class="capture-demo">
     <div class="demo-toolbar">
-      <span><Sparkles :size="16" />Try a little thought</span>
-      <div class="language-toggle" role="group" aria-label="Demo language">
+      <span><Sparkles :size="16" />{{ t("Try a little thought") }}</span>
+      <div class="language-toggle" role="group" :aria-label="t('Demo language')">
         <button
           :aria-pressed="language === 'en'"
           :class="{ active: language === 'en' }"
           @click="language = 'en'"
-        >
+         lang="en">
           English</button
         ><button
           lang="km"
@@ -90,7 +92,7 @@ watch([language, selected], reset);
       </div>
     </div>
     <div class="demo-inner">
-      <div class="example-options" role="group" aria-label="Capture examples">
+      <div class="example-options" role="group" :aria-label="t('Capture examples')">
         <button
           v-for="(item, index) in examples[language]"
           :key="index"
@@ -111,13 +113,13 @@ watch([language, selected], reset);
         >
       </div>
       <div class="demo-action">
-        <span>Just say it your way.</span
+        <span>{{ t("Just say it your way.") }}</span
         ><button
           class="button button-small"
           :disabled="reviewed"
           @click="reviewed = true"
         >
-          {{ reviewed ? "Ready to review" : "See the task"
+          {{ t(reviewed ? "Ready to review" : "See the task")
           }}<Check v-if="reviewed" :size="15" /><ArrowRight v-else :size="15" />
         </button>
       </div>
@@ -133,7 +135,7 @@ watch([language, selected], reset);
           <div v-if="reviewed" key="review">
             <div class="draft-header">
               <span class="eyebrow">{{
-                saved ? "SAVED IN THIS DEMO" : "YOUR TASK, READY TO REVIEW"
+                t(saved ? "SAVED IN THIS DEMO" : "YOUR TASK, READY TO REVIEW")
               }}</span
               ><Check v-if="saved" :size="19" /><ChevronDown
                 v-else
@@ -147,24 +149,24 @@ watch([language, selected], reset);
             <span class="draft-tag" :lang="language">{{ example.tag }}</span>
             <div class="draft-footer">
               <button class="text-button" @click="reset">
-                <RotateCcw :size="14" />Start again</button
+                <RotateCcw :size="14" />{{ t("Start again") }}</button
               ><button
                 class="button button-small"
                 :disabled="saved"
                 @click="saved = true"
               >
-                {{ saved ? "Task saved" : "Save example" }}<Check :size="15" />
+                {{ t(saved ? "Task saved" : "Save example") }}<Check :size="15" />
               </button>
             </div>
           </div>
           <div v-else key="empty" class="demo-empty">
             <CalendarDays :size="23" />
-            <p>A thought becomes a task.<br />You get the final say.</p>
+            <p>{{ t("A thought becomes a task.") }}<br />{{ t("You get the final say.") }}</p>
           </div>
         </Transition>
       </div>
       <p class="demo-disclaimer">
-        An interactive example. Nothing is sent or saved to the mobile app.
+        {{ t("An interactive example. Nothing is sent or saved to the mobile app.") }}
       </p>
     </div>
   </div>

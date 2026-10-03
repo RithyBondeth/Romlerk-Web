@@ -1649,3 +1649,52 @@ p {
   height: 100%;
   object-fit: contain;
 }
+
+@font-face {
+  font-family: "Noto Serif Khmer";
+  src: url("/fonts/NotoSerifKhmer.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding-inline: 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+.language-switch:hover { color: var(--accent); background: var(--accent-soft); }
+
+/* Khmer combining marks need natural spacing and generous line boxes. */
+:lang(km) {
+  font-family: "Noto Serif Khmer", Merriweather, serif;
+  letter-spacing: normal;
+}
+[lang="en"] { font-family: Merriweather, Georgia, serif; }
+html:lang(km) :is(h1, h2, h3) { line-height: 1.65; letter-spacing: normal; }
+html:lang(km) .hero h1 { font-size: clamp(36px, 4.8vw, 58px); }
+html:lang(km) .eyebrow { font-size: 12px; line-height: 1.9; }
+html:lang(km) .desktop-nav { gap: 20px; font-size: 12px; }
+html:lang(km) :is(.hero-platforms, .promise-strip, .closing-note, .preview-caption) { font-size: 12px; }
+html:lang(km) :is(.phone-date, .phone-section-label) { font-size: 10px; }
+html:lang(km) :is(.task-meta, .task-tag, .phone-heading p) { font-size: 10px; }
+html:lang(km) .phone-tabs > span { font-size: 9px; }
+html:lang(km) .phone-breath span { font-size: 11px; }
+html:lang(km) .demo-disclaimer { font-size: 10px; }
+html:lang(km) :is(.hero-actions, .demo-action, .draft-footer, .detail-tags) { flex-wrap: wrap; }
+html:lang(km) .site-footer nav { flex-wrap: wrap; }
+@media (max-width: 1100px) {
+  .brand-khmer { display: none; }
+}
+@media (max-width: 767px) {
+  html:lang(km) .hero h1 { font-size: clamp(32px, 8vw, 48px); }
+  html:lang(km) .closing-section h2 { font-size: 28px; }
+  html:lang(km) .demo-toolbar { flex-wrap: wrap; gap: 12px; }
+}
