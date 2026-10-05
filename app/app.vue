@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { ArrowUpRight, Menu, Moon, Sun, X } from "@lucide/vue";
+import { ArrowUpRight, Languages, Menu, Moon, Sun, X } from "@lucide/vue";
 const { t, locale, localePath, rememberLocale } = useLocale();
 const menuOpen = ref(false);
+const menuTrigger = ref<HTMLButtonElement>();
+function closeMenu() {
+  menuOpen.value = false;
+  menuTrigger.value?.focus();
+}
 const { animate, enter, leave, cancel, reduced } = useMotion();
 const isDark = ref(false);
 const downloadDialog = ref<HTMLDialogElement>();
 const config = useRuntimeConfig();
+const downloadLabel = computed(() => config.public.appStoreUrl || config.public.playStoreUrl ? "Get Romlerk" : "Check availability");
 const route = useRoute();
 useHead(() => ({ htmlAttrs: { lang: locale.value } }));
 const otherLocale = computed(() => locale.value === "en" ? "km" : "en");
@@ -76,7 +82,7 @@ provide("openDownloads", openDownloads);
 
 <template>
   <a class="skip-link" href="#main">{{ t("Skip to content") }}</a>
-  <header class="site-header">
+  <header class="site-header" @keydown.esc.prevent="closeMenu">
     <div class="container header-inner">
       <NuxtLink :to="localePath('/')" class="brand" :aria-label="t('Romlerk home')"
         ><span class="brand-mark"
@@ -91,18 +97,21 @@ provide("openDownloads", openDownloads);
         <NuxtLink :to="localePath('/#how-it-works')">{{ t("How it works") }}</NuxtLink>
         <NuxtLink :to="localePath('/#made-for-you')">{{ t("Made for you") }}</NuxtLink>
         <NuxtLink :to="localePath('/#questions')">{{ t("Questions") }}</NuxtLink>
+        <NuxtLink :to="localePath('/about')">{{ t("The developer") }}</NuxtLink>
       </nav>
       <div class="header-actions">
         <NuxtLink
-          class="language-switch"
+          class="icon-button language-switch"
           :to="localePath(route.fullPath, otherLocale)"
           :lang="otherLocale"
           :hreflang="otherLocale"
           :aria-label="locale === 'en' ? 'ប្តូរទៅភាសាខ្មែរ' : 'Switch to English'"
+          :title="locale === 'en' ? 'Switch to Khmer' : 'Switch to English'"
           @click="rememberLocale(otherLocale)"
-        >{{ locale === 'en' ? 'ខ្មែរ' : 'EN' }}</NuxtLink>
+        ><Languages :size="19" aria-hidden="true" /></NuxtLink>
         <button
           class="icon-button theme-toggle"
+          :title="t(isDark ? 'Switch to light theme' : 'Switch to dark theme')"
           :aria-label="
             t(isDark ? 'Switch to light theme' : 'Switch to dark theme')
           "
@@ -114,9 +123,10 @@ provide("openDownloads", openDownloads);
           class="button button-small header-download"
           @click="openDownloads"
         >
-          {{ t("Get Romlerk") }}<ArrowUpRight :size="16" />
+          {{ t(downloadLabel) }}<ArrowUpRight :size="16" />
         </button>
         <button
+          ref="menuTrigger"
           class="icon-button mobile-menu-button"
           :aria-expanded="menuOpen"
           aria-controls="mobile-nav"
@@ -140,11 +150,12 @@ provide("openDownloads", openDownloads);
         class="mobile-nav container"
         :aria-label="t('Mobile navigation')"
       >
-        <NuxtLink :to="localePath('/#how-it-works')">{{ t("How it works") }}</NuxtLink
-        ><NuxtLink :to="localePath('/#made-for-you')">{{ t("Made for you") }}</NuxtLink
-        ><NuxtLink :to="localePath('/#questions')">{{ t("Questions") }}</NuxtLink
+        <NuxtLink @click="menuOpen = false" :to="localePath('/#how-it-works')">{{ t("How it works") }}</NuxtLink
+        ><NuxtLink @click="menuOpen = false" :to="localePath('/#made-for-you')">{{ t("Made for you") }}</NuxtLink
+        ><NuxtLink @click="menuOpen = false" :to="localePath('/#questions')">{{ t("Questions") }}</NuxtLink
+        ><NuxtLink @click="menuOpen = false" :to="localePath('/about')">{{ t("The developer") }}</NuxtLink
         ><button class="button" @click="openDownloads">
-          {{ t("Get Romlerk") }}<ArrowUpRight :size="16" />
+          {{ t(downloadLabel) }}<ArrowUpRight :size="16" />
         </button>
       </nav>
     </Transition>
@@ -166,8 +177,9 @@ provide("openDownloads", openDownloads);
     <nav :aria-label="t('Footer navigation')">
       <NuxtLink :to="localePath('/privacy')">{{ t("Privacy") }}</NuxtLink
       ><NuxtLink :to="localePath('/help')">{{ t("Help & support") }}</NuxtLink
+      ><NuxtLink :to="localePath('/about')">{{ t("About the developer") }}</NuxtLink
       ><button class="text-button" @click="openDownloads">
-        {{ t("Get the app") }}<ArrowUpRight :size="15" />
+        {{ t(downloadLabel) }}<ArrowUpRight :size="15" />
       </button>
     </nav>
     <span class="copyright">© 2026 Romlerk</span>
@@ -194,7 +206,6 @@ provide("openDownloads", openDownloads);
         <X :size="22" />
       </button>
     </div>
-    <p class="eyebrow">{{ t("Take a little weight off") }}</p>
     <h2 id="download-title">{{ t("Romlerk, on your phone.") }}</h2>
     <p v-if="config.public.appStoreUrl || config.public.playStoreUrl">
       {{ t("Choose your platform below. More download options will appear as they become available.") }}
@@ -228,6 +239,8 @@ provide("openDownloads", openDownloads);
       class="button button-outline"
       >{{ t("Join the beta") }}<ArrowUpRight :size="16"
     /></a>
+    <p class="release-detail">{{ t("Pricing and final device requirements will be announced before public launch.") }}</p>
+    <a v-if="config.public.supportEmail" class="inline-link" :href="`mailto:${config.public.supportEmail}`">{{ t("Contact support") }}<ArrowUpRight :size="16" /></a>
     <p class="small-copy">
       {{ t("In the meantime,") }}
       <NuxtLink :to="localePath('/#how-it-works')" @click="closeDownloads"

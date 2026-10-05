@@ -15,6 +15,10 @@ import {
   WifiOff,
 } from "@lucide/vue";
 const { t, localePath } = useLocale();
+const landing = ref<HTMLElement>();
+useLandingMotion(landing);
+const config = useRuntimeConfig();
+const downloadLabel = computed(() => config.public.appStoreUrl || config.public.playStoreUrl ? "Get Romlerk" : "Check availability");
 const openDownloads = inject<() => void>("openDownloads")!;
 useSeoMeta({
   title: () => t("Romlerk | Your day, a little lighter"),
@@ -46,24 +50,36 @@ const questions = [
   {
     title: "What happens to my tasks if I change phones?",
     answer:
-      "You can export tasks as JSON or CSV. Phone backup is enabled by default and can be turned off in Settings; changing that choice takes effect at the next launch. There is currently no Romlerk account or cross-device sync.",
+      "Create a full JSON backup in Settings, then restore it on your new phone. It includes tasks, standalone notes, daily plans, and preferences. Task-only JSON and CSV exports cannot be used for full restore. Phone backup is enabled by default; there is no account or automatic cross-device sync.",
+  },
+  {
+    title: "How much will Romlerk cost?",
+    answer: "Pricing and any purchase options will be announced before public launch. There are no purchases or subscriptions available on this website.",
+  },
+  {
+    title: "Which phones will be supported?",
+    answer: "Romlerk is being built for iOS and Android. Final supported OS versions and device requirements will be confirmed before release. Core tasks do not require an AI model; enhanced AI and on-device voice have separate device and language requirements.",
+  },
+  {
+    title: "Can I use it with my calendar?",
+    answer: "You can preview a task and share it as an ICS calendar file. Opening it depends on your installed calendar apps. Later task edits are not automatically synced, and calendar import is not currently available.",
   },
 ];
 </script>
 
 <template>
+  <div ref="landing" class="landing-page">
+  <div class="reading-progress" aria-hidden="true" />
   <section class="hero container">
     <div class="hero-copy">
-      <p class="eyebrow">
-        <span class="eyebrow-rule" />{{ t("A LITTLE SPACE FOR WHAT MATTERS") }}
-      </p>
-      <h1>{{ t("Your day,") }}<br />{{ t("a little") }} <span>{{ t("lighter.") }}</span></h1>
+      <p class="hero-kicker"><span class="kicker-dot" />{{ t("A little space for what matters.") }}</p>
+      <h1><span class="hero-line">{{ t("Your day,") }}</span><span class="hero-line">{{ t("a little") }} <em>{{ t("lighter.") }}</em></span></h1>
       <p class="hero-description">
         {{ t("Everyday thoughts, turned into tasks and reminders. A private little space on your phone, in English or Khmer.") }}
       </p>
       <div class="hero-actions">
         <button class="button" @click="openDownloads">
-          {{ t("Get Romlerk") }}<ArrowUpRight :size="18" /></button
+          {{ t(downloadLabel) }}<ArrowUpRight :size="18" /></button
         ><a class="button button-quiet" href="#how-it-works"
           >{{ t("See how it works") }}<ArrowRight :size="17"
         /></a>
@@ -71,8 +87,13 @@ const questions = [
       <p class="hero-platforms">
         <Smartphone :size="15" />{{ t("Coming soon for iOS & Android") }}
       </p>
+      <div class="hero-note"><img class="app-illustration" src="/illustrations/coffee.svg" alt="" width="160" height="120" /><span>{{ t("Room for your plans.") }}<br /><strong>{{ t("And the rest of your life.") }}</strong></span></div>
     </div>
-    <TodayPreview />
+    <div class="hero-visual">
+      <svg class="hero-orbit" viewBox="0 0 480 650" aria-hidden="true"><path class="ink-path" d="M63 87 C-54 206 36 540 253 594 C431 638 488 437 421 309 C363 197 233 228 333 107 M316 109 L334 105 L327 126" /></svg>
+      <div class="hero-stage" aria-hidden="true" /><span class="hero-sticker"><ShieldCheck :size="17" />{{ t("Just you. Your phone. Your plans.") }}</span>
+      <PhoneShowcase />
+    </div>
   </section>
 
   <div class="promise-strip container">
@@ -85,7 +106,7 @@ const questions = [
 
   <section id="how-it-works" class="section container capture-section">
     <div class="section-copy">
-      <p class="eyebrow">{{ t("FROM THOUGHT TO TASK") }}</p>
+      <p class="eyebrow"><span class="section-number">01</span>{{ t("From thought to task") }}</p>
       <h2>{{ t("Write it down.") }}<br />{{ t("Let your mind move on.") }}</h2>
       <p>
         {{ t("“Call Mom tomorrow at 9.” That’s enough. Romlerk picks out the details, and you decide what to save.") }}
@@ -119,6 +140,7 @@ const questions = [
 
   <section id="made-for-you" class="section container everyday-section">
     <div class="section-heading">
+      <p class="eyebrow"><span class="section-number">02</span>{{ t("Made for real life") }}</p>
       <h2>{{ t("Less juggling.") }}<br />{{ t("More living.") }}</h2>
       <p>{{ t("A simple place for your plans, with room for the rest of your life.") }}</p>
     </div>
@@ -158,6 +180,7 @@ const questions = [
             {{ t("Add recurring tasks, tags, priorities, and notes. Keep the small things together.") }}
           </p>
         </div>
+        <img class="app-illustration details-illustration" src="/illustrations/strolling.svg" alt="" width="200" height="150" loading="lazy" />
         <div class="detail-tags">
           <span><RotateCcw />{{ t("Every Sunday") }}</span
           ><span><FileText />{{ t("A note to self") }}</span
@@ -166,6 +189,8 @@ const questions = [
       </article>
     </div>
   </section>
+
+  <DayStory />
 
   <section class="section container privacy-section">
     <div class="privacy-art">
@@ -179,7 +204,7 @@ const questions = [
       /><span><ShieldCheck :size="18" />{{ t("A personal space, on your phone.") }}</span>
     </div>
     <div class="section-copy">
-      <p class="eyebrow">{{ t("YOUR LIFE IS YOUR BUSINESS") }}</p>
+      <p class="eyebrow"><span class="section-number">03</span>{{ t("A little peace of mind") }}</p>
       <h2>{{ t("On your phone.") }}<br />{{ t("On your terms.") }}</h2>
       <p>
         {{ t("Your thoughts don’t need a cloud account. Romlerk processes capture on your device and keeps your tasks in a local database.") }}
@@ -197,6 +222,7 @@ const questions = [
 
   <section id="questions" class="section container faq-section">
     <div class="section-heading">
+      <p class="eyebrow">{{ t("Before you get started") }}</p>
       <h2>{{ t("Good questions.") }}<br />{{ t("Simple answers.") }}</h2>
       <NuxtLink class="inline-link" :to="localePath('/help')"
         >{{ t("More about Romlerk") }}<ArrowUpRight :size="16"
@@ -213,13 +239,15 @@ const questions = [
   </section>
 
   <section class="closing-section container">
+    <img class="closing-illustration app-illustration" src="/illustrations/meditating.svg" alt="" width="240" height="180" loading="lazy" />
     <span class="closing-symbol closing-logo"
       ><img src="/branding/romlerk-logo.png" alt="" width="96" height="96"
     /></span>
-    <h2>{{ t("Carry your day.") }}<br />{{ t("Not everything in your head.") }}</h2>
+    <h2><span class="closing-line">{{ t("Carry your day.") }}</span><span class="closing-line"><em>{{ t("Not everything in your head.") }}</em></span></h2>
     <p>{{ t("A thought. A task. A little peace of mind.") }}</p>
     <button class="button" @click="openDownloads">
-      {{ t("Get Romlerk") }}<ArrowUpRight :size="18" /></button
+      {{ t(downloadLabel) }}<ArrowUpRight :size="18" /></button
     ><span class="closing-note">{{ t("Coming soon for iOS & Android") }}</span>
   </section>
+  </div>
 </template>

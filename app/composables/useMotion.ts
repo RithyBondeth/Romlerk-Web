@@ -25,10 +25,12 @@ export function useMotion() {
   function animate(target: gsap.TweenTarget, vars: gsap.TweenVars) {
     let tween: gsap.core.Tween;
     tween = gsap.to(target, {
-      duration: reduced.value ? 0 : 0.32,
+      duration: 0.32,
       ease: "power2.out",
       overwrite: "auto",
       ...vars,
+      // A caller's explicit duration must never override the OS preference.
+      ...(reduced.value ? { duration: 0, delay: 0 } : {}),
       onInterrupt() {
         animations.delete(tween);
         vars.onInterrupt?.();

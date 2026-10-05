@@ -12,6 +12,7 @@ import {
   FileText,
 } from "@lucide/vue";
 const { t } = useLocale();
+defineProps<{ embedded?: boolean }>();
 const { animate, reduced } = useMotion();
 const progressRing = ref<HTMLElement>();
 const tasks = ref([
@@ -35,6 +36,13 @@ const completed = computed(
   () => tasks.value.filter((task) => task.done).length,
 );
 const remaining = computed(() => tasks.value.length - completed.value);
+const planned = ref(false);
+const showFocus = ref(false);
+const focusTask = computed(() => tasks.value.find(task => !task.done));
+const groups = computed(() => [
+  { label: "Today", tasks: tasks.value.filter(task => !task.done) },
+  { label: "Done today", tasks: tasks.value.filter(task => task.done) },
+].filter(group => group.tasks.length));
 watch(completed, (count) => {
   if (progressRing.value)
     animate(progressRing.value, {
@@ -57,7 +65,7 @@ watch(completed, (count) => {
       </div>
       <div class="phone-content">
         <div class="phone-date">
-          <span>{{ t("FRIDAY, OCTOBER 2") }}</span
+          <span>{{ t("MONDAY, OCTOBER 5") }}</span
           ><Settings :size="17" aria-hidden="true" />
         </div>
         <div class="phone-heading">
@@ -77,16 +85,23 @@ watch(completed, (count) => {
             >
           </div>
         </div>
-        <div class="phone-section-label">
-          <Sun :size="15" /><span>{{ t("YOUR DAY") }}</span
-          ><span>{{ t("{count} remaining", { count: remaining }) }}</span>
+        <div class="phone-planning">
+          <button class="phone-plan" :aria-pressed="planned" @click="planned = !planned">
+            <CalendarDays :size="16" />{{ planned ? t('Plan: {done} / {total}', { done: completed, total: tasks.length }) : t('Plan my day') }}
+          </button>
+          <button class="phone-focus" :aria-pressed="showFocus" @click="showFocus = !showFocus">{{ t('What should I do now?') }}<ChevronRight :size="14" /></button>
+          <p v-if="showFocus" class="focus-answer" aria-live="polite">{{ focusTask ? t('Start with {task}', { task: t(focusTask.title) }) : t('A little room to breathe') }}</p>
         </div>
-        <div class="phone-task-group">
+        <div v-for="group in groups" :key="group.label" class="phone-group">
+        <div class="phone-section-label">
+          <Sun :size="15" /><span>{{ t(group.label) }}</span><span>{{ group.tasks.length }}</span>
+        </div>
+        <TransitionGroup name="task-list" tag="div" class="phone-task-group">
           <div
-            v-for="task in tasks"
+            v-for="task in group.tasks"
             :key="task.id"
             class="phone-task"
-            :class="{ completed: task.done }"
+            :class="{ completed: task.done, focused: showFocus && focusTask?.id === task.id }"
           >
             <button
               class="task-check"
@@ -108,15 +123,7 @@ watch(completed, (count) => {
             </div>
             <ChevronRight :size="14" aria-hidden="true" />
           </div>
-        </div>
-        <div class="phone-breath">
-          <img
-            src="/illustrations/coffee.svg"
-            alt=""
-            width="170"
-            height="128"
-            class="app-illustration"
-          /><span>{{ t("A plan for your day.") }}<br />{{ t("Room for yourself.") }}</span>
+        </TransitionGroup>
         </div>
       </div>
       <div class="phone-controls">
@@ -125,16 +132,16 @@ watch(completed, (count) => {
         >
         <div class="phone-tabs" aria-hidden="true">
           <span class="selected"><Sun :size="17" />{{ t("Today") }}</span
-          ><span><CalendarDays :size="17" />{{ t("Upcoming") }}</span
-          ><span><Inbox :size="17" />{{ t("Inbox") }}</span
-          ><span><FileText :size="17" />{{ t("Notes") }}</span
-          ><span><Search :size="17" />{{ t("Search") }}</span>
+          ><span><CalendarDays :size="19" /></span
+          ><span><Inbox :size="19" /></span
+          ><span><FileText :size="19" /></span
+          ><span><Search :size="19" /></span>
         </div>
         <div class="home-indicator" />
       </div>
     </div>
-    <div class="preview-caption">
-      <Coffee :size="15" /><span>{{ t("Try checking something off.") }}</span>
+    <div v-if="!embedded" class="preview-caption">
+      <Coffee :size="15" /><span>{{ t("A simplified, interactive preview. Try planning your day.") }}</span>
     </div>
   </div>
 </template>
