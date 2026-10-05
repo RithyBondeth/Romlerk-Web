@@ -27,7 +27,7 @@ useSeoMeta({
       </p>
       <h2>{{ t("Find the right view") }}</h2>
       <p>
-        {{ t("Today gathers tasks due today and overdue tasks. Upcoming holds future tasks. Inbox keeps tasks without dates. Notes is a place for longer thoughts, and Search helps you find tasks by text, status, priority, tag, or due window.") }}
+        {{ t("Today gathers tasks due today and overdue tasks. Upcoming holds future tasks. Inbox keeps tasks without dates. Notes is a place for longer thoughts, and Search finds tasks and standalone notes by text; status, priority, tag, and due-window filters apply to tasks.") }}
       </p>
       <h2>{{ t("If a reminder is not arriving") }}</h2>
       <p>
@@ -39,8 +39,16 @@ useSeoMeta({
       </p>
       <h2>{{ t("Take your tasks with you") }}</h2>
       <p>
-        {{ t("Settings offers JSON and CSV task exports through your phone’s share sheet. These exports cover tasks, including their attached notes. Standalone notes are not currently included in task exports. Romlerk does not currently provide cross-device account sync.") }}
+        {{ t("Settings offers Create full backup and Restore full backup. A full JSON backup includes tasks, standalone notes, tags, daily plans, preferences, and unfinished capture drafts. Restore previews the file before replacing local data. Keep backup files private: they contain readable data. Task-only JSON and CSV exports are separate and cannot be used for full restore. There is no automatic cross-device sync.") }}
       </p>
+      <h2>{{ t("Make a plan for today") }}</h2>
+      <p>{{ t("Use Plan my day to choose today’s priorities. Your selections are saved for the day and progress updates as you complete them. What should I do now? offers a starting point from your active tasks.") }}</p>
+      <h2>{{ t("Capture from anywhere") }}</h2>
+      <p>{{ t("Widgets, launcher shortcuts, and shared text open task capture for review. Unfinished capture is kept locally so you can resume or discard it later. Completing or deleting an item offers a brief Undo action.") }}</p>
+      <h2>{{ t("Share with your calendar") }}</h2>
+      <p>{{ t("Preview a task and share an ICS file with an installed calendar app. It exports one occurrence; later edits are not automatically synced. Calendar import and automatic sync are not currently available.") }}</p>
+      <h2>{{ t("Pricing and compatibility") }}</h2>
+      <p>{{ t("Romlerk is being built for iOS and Android. Pricing and final supported OS versions will be confirmed before public launch. Core task features work without an AI model. Enhanced AI and voice depend on device, OS, language, and on-device availability.") }}</p>
       <h2>{{ t("Get the app") }}</h2>
       <p>{{ t("Public downloads are coming soon. Check availability below.") }}</p>
       <button class="button button-small" @click="openDownloads">

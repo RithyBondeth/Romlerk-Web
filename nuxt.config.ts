@@ -8,13 +8,18 @@ export default defineNuxtConfig({
       playStoreUrl: "",
       betaUrl: "",
       supportEmail: "",
+      developerName: "Rithy Bondeth",
+      developerBio: "",
+      developerWebsiteUrl: "https://bondeth.dev",
+      developerGithubUrl: "https://github.com/RithyBondeth",
+      developerEmail: "rithybondeth999@gmail.com",
     },
   },
   hooks: {
     "pages:extend"(pages) {
       // Separate records make switching language work even on the same page.
       for (const page of [...pages]) {
-        if (["/", "/privacy", "/help"].includes(page.path)) {
+        if (["/", "/privacy", "/help", "/about"].includes(page.path)) {
           pages.push({
             ...page,
             name: `${page.name}-km`,
@@ -24,7 +29,7 @@ export default defineNuxtConfig({
       }
     },
   },
-  nitro: { prerender: { routes: ["/", "/privacy", "/help", "/km", "/km/privacy", "/km/help"] } },
+  nitro: { prerender: { routes: ["/", "/privacy", "/help", "/km", "/km/privacy", "/km/help", "/about", "/km/about"] } },
   app: {
     head: {
       htmlAttrs: { lang: "en" },
@@ -35,7 +40,7 @@ export default defineNuxtConfig({
           content:
             "Turn everyday thoughts into tasks and reminders. Romlerk is a private, offline mobile task app with English and Khmer capture. No account required.",
         },
-        { name: "theme-color", content: "#FAF7F1" },
+        { name: "theme-color", content: "#F4F7FC" },
         { property: "og:type", content: "website" },
         { property: "og:site_name", content: "Romlerk" },
         { name: "twitter:card", content: "summary" },
@@ -54,7 +59,7 @@ export default defineNuxtConfig({
         },
         {
           rel: "preload",
-          href: "/fonts/Merriweather-Regular.woff2",
+          href: "/fonts/ubuntu/Ubuntu-Regular.woff2",
           as: "font",
           type: "font/woff2",
           crossorigin: "anonymous",

@@ -1,7 +1,8 @@
 import khmer from "~/locales/km.json";
+import landingKhmer from "~/locales/km-landing.json";
 
 export type Locale = "en" | "km";
-const messages: Record<string, string> = khmer;
+const messages: Record<string, string> = { ...khmer, ...landingKhmer };
 
 /** The URL is authoritative, so both languages can be shared and prerendered. */
 export function useLocale() {

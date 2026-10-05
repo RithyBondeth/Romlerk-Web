@@ -10,7 +10,7 @@ Use case: logo-brand. Create one original, polished logo SYMBOL for Romlerk, a c
 
 ## Applied assets
 
-The approved mascot is version 2. `romlerk-logo.png` is the 512px transparent UI export, and `romlerk-app-icon.png` is its 1024px opaque paper-backed icon. The web header, footer, download dialog and closing section use the UI export. The favicon and Apple touch icon use paper-backed exports so the dark outlines stay readable.
+The approved mascot is the original version 2, recolored blue to match the mobile app. The unchanged mascot drawing comes from the mobile image-generation edit `romlerk-doodle-logo-blue-source.png`, copied locally as the export source. `romlerk-logo.png` is the 512px transparent UI export, and `romlerk-app-icon.png` is its 1024px opaque blue-white-backed icon. The web header, footer, download dialog and closing section use the UI export. The favicon and Apple touch icon use blue-white-backed exports so the dark outlines stay readable.
 
 Regenerate on macOS from the web repository root:
 
