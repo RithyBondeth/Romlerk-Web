@@ -1,52 +1,106 @@
-# Romlerk web
+<div align="center">
 
-Nuxt 4 landing page for the Romlerk mobile app. Shares the app's blue palette, Ubuntu English and Koh Santepheap Khmer typography, original blue mascot, local illustrations, rounded surfaces, and pill buttons. A floating header and responsive illustrated hero introduce a working Today preview with the app's floating navigation style. No analytics or signup backend.
+# Romlerk — Web
 
-## Run
+**The bilingual landing page for Romlerk, a local-first, AI-assisted todo app.**
 
-Node 22 or newer:
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Nuxt](https://img.shields.io/badge/Nuxt-00DC82?style=for-the-badge&logo=nuxtdotjs&logoColor=white)
+![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white)
+![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)
 
-```sh
+</div>
+
+---
+
+## Overview
+
+Romlerk Web is the marketing site for the [Romlerk](https://github.com/RithyBondeth/Romlerk-Mobile) mobile app. It shares the app's blue palette, Ubuntu (English) and Koh Santepheap (Khmer) typography, original blue mascot, and illustrations. It has no analytics and no sign-up backend.
+
+## Features
+
+- **Interactive Today preview:** toggle an example daily plan, get a suggested starting task, and complete or reopen sample tasks.
+- **Capture demo** with English and Khmer examples. It is clearly labeled as a demo, not the mobile parser.
+- **English and Khmer routes,** all prerendered (`/`, `/privacy`, `/help`, `/about`, and their `/km` versions).
+- **Developer page** introducing the creator.
+- **GSAP motion:** hero timeline, SVG ink-path drawing, scroll progress, and staggered reveals. All of it respects `prefers-reduced-motion`.
+- **Light and dark themes** that follow the OS, with a local override.
+- **Accessible, keyboard-friendly** navigation, dialogs, and FAQ.
+- **Honest launch states:** missing store links show "Coming soon" instead of broken buttons.
+
+## Tech Stack
+
+| Area | Technology |
+| --- | --- |
+| Framework | Nuxt 4, Vue 3 |
+| Language | TypeScript |
+| Animation | GSAP |
+| Icons | Lucide |
+| Hosting | Static generation (`.output/public`) or a Node server |
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 22 or newer
+
+### Installation
+
+```bash
+git clone https://github.com/RithyBondeth/Romlerk-Web.git
+cd Romlerk-Web
 npm install
 npm run dev
 ```
 
-## Verify and build
+### Environment Variables
 
-```sh
-npm run typecheck
-npm run build
-npm run generate
+Copy `.env.example` to `.env`. All values are optional.
+
+| Variable | Purpose |
+| --- | --- |
+| `NUXT_PUBLIC_APP_STORE_URL`, `NUXT_PUBLIC_PLAY_STORE_URL` | Store links (left empty, the site shows "Coming soon") |
+| `NUXT_PUBLIC_BETA_URL` | Beta sign-up destination |
+| `NUXT_PUBLIC_SUPPORT_EMAIL` | Support contact |
+| `NUXT_PUBLIC_DEVELOPER_*` | Developer profile overrides |
+
+These are embedded at generation time, so regenerate after changing them.
+
+### Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run typecheck` | Type-check the project |
+| `npm run build` | Build for a Node server |
+| `npm run generate` | Generate static output in `.output/public` |
+| `npm run preview` | Preview the production build |
+
+## Project Structure
+
+```text
+Romlerk-Web/
+├── app/
+│   ├── components/     # Capture demo, Today preview, phone showcase, FAQ
+│   ├── composables/    # Locale and motion helpers
+│   ├── locales/        # Khmer translation catalogs
+│   └── pages/          # index, about, help, privacy
+├── public/             # Fonts, illustrations, branding, developer portrait
+└── scripts/            # Branding export tooling
 ```
 
-Static hosting output is `.output/public`. English routes `/`, `/privacy`, `/help`, and `/about`, and Khmer routes `/km`, `/km/privacy`, `/km/help`, and `/km/about` are prerendered. Use `npm run build` for a Node server instead.
+## Credits
 
-## Launch destinations
+Illustrations are Open Doodles by Pablo Stanley (CC0), recolored to the Romlerk palette. Font licenses are included in `public/fonts/`.
 
-Copy `.env.example` to `.env` and provide real app-store links, a beta URL, and a support email when available. These optional public settings are embedded at generation time for static deployments; regenerate after changing them. Without store links, the primary action reads Check availability, and the dialog shows Coming soon and offers the working demo. Configured beta and support destinations appear in the dialog. Pricing and final release compatibility remain explicitly pending. No email addresses are collected.
+## Related Repositories
 
-## Languages
+- [Romlerk-Mobile](https://github.com/RithyBondeth/Romlerk-Mobile): the Flutter mobile app
 
-The header’s language icon switches between English and Khmer while preserving the current page, query, and section. Internal links stay in the selected language. The URL determines the language during server rendering, including page titles, descriptions, and accessible labels. A browser preference remembers the selection when returning to the English home entry point; explicit Khmer links always keep Khmer. Storage is optional.
+## Author
 
-Copy is translated through `app/composables/useLocale.ts`, with English source messages and Khmer catalogs in `app/locales/km.json` and `app/locales/km-landing.json`. The demo can independently show either example language, and follows the site language when it changes. Koh Santepheap is bundled with the site; its license is in `public/fonts/koh-santepheap/OFL.txt`. English uses Ubuntu, with its license in `public/fonts/ubuntu/UFL.txt`.
+**Rithy Bondeth** — Full Stack Developer & AI Engineer
 
-## Interactive examples
-
-The simplified Today preview lets visitors toggle an example daily plan, request a suggested starting task, and complete/reopen sample tasks. Completed items move into Done today and update plan progress. The capture demo lets visitors choose English or Khmer examples, review a predefined result, and save it in page memory. It is explicitly a demo, not the mobile parser or native AI. Reloading resets the examples.
-
-The site follows the OS color preference; the theme toggle stores an override locally. Navigation, native download dialog, and FAQ disclosures support keyboard interaction. Motion respects reduced-motion preferences.
-
-## Assets and content
-
-Ubuntu and Koh Santepheap are compressed to WOFF2 from the mobile app's bundled fonts, preserving their full glyph sets. Illustrations are adapted from `../romlerk_mobile/assets` and served locally. Illustrations are Open Doodles by Pablo Stanley (CC0); web copies map their accent to blue and outlines to navy. The approved mascot is the original version 2 artwork recolored blue; the favicon and Apple touch icon use the same mascot. Provenance is in `public/illustrations/README.md`. Review the privacy explanation, release availability, copy, links, and Khmer examples before publishing.
-
-## Dependency audit
-
-The current Nuxt development toolchain includes a `node-forge` signature-verification advisory through its `listhen` TLS tooling. At implementation time the npm registry offered no patched version; the audit proposes a Nuxt downgrade. The generated static output contains no Node server or that TLS tooling. Recheck `npm audit` before updating or deploying a Node server.
-
-Motion uses short, consistent easing for buttons, capture results, the mobile menu, FAQs, the download dialog, and the task progress ring. Animations are cancelled on unmount, handle repeated clicks, and respect `prefers-reduced-motion`. The landing page adds a GSAP hero timeline, SVG ink-path drawing, scroll progress, staggered capture/feature reveals, paper-panel scrubbing, and desktop-only narrative heading pinning. `useLandingMotion` scopes and reverts all timelines and triggers on unmount; it refreshes after font loading and content-height changes. Phones and tablets use an unpinned sequence. Reduced motion skips the landing choreography entirely and keeps content visible. Nothing loops continuously, and native scrolling remains in control.
-
-## Developer page
-
-`/about` and `/km/about` introduce Rithy Bondeth with a local portrait, bilingual bio, the Romlerk story, and links to the portfolio, GitHub, and public email from [bondeth.dev](https://bondeth.dev/en). The header, mobile menu, and footer link to this page. Optional `NUXT_PUBLIC_DEVELOPER_*` settings in `.env.example` override the public profile; an empty bio uses the bundled English/Khmer introduction. Regenerate the static output after changing these settings. Portrait provenance is recorded in `public/developer/README.md`.
+[![Portfolio](https://img.shields.io/badge/Portfolio-0A0A0A?style=for-the-badge&logo=vercel&logoColor=white)](https://bondeth.dev)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/RithyBondeth)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rithy-bondeth-484073282/)
